@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { Provider, observer } from 'mobx-react';
-import github from './stores/github';
+import { Provider } from 'mobx-react';
+import Github from './stores/github';
+import Wrapper from './containers/wrapper';
 
-@observer
+const github = new Github();
+
 class App extends Component {
 
   onChange = (e) => {
@@ -25,12 +27,14 @@ class App extends Component {
 
 
   render() {
+    console.log(this.store.github);
     return (
       <Provider {...this.store} >
-        <div>
+        <Wrapper />
+        {/* <div>
           <input type="file" ref={(ref) => { this.uploadFile = ref; }} onChange={this.onChange} />
           <button onClick={this.upload}>Uploads</button>
-        </div>
+        </div> */}
       </Provider>
     );
   }
