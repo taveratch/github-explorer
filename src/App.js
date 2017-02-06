@@ -25,7 +25,6 @@ class App extends Component {
     github,
   }
 
-
   render() {
     console.log(this.store.github);
     return (
