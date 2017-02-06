@@ -1,31 +1,37 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
-import {observer} from 'mobx-react'
+import { Provider, observer } from 'mobx-react';
+import github from './stores/github';
 
 @observer
 class App extends Component {
-  _setName = () => {
-    let firstnameRef = this.refs['firstname']
-    let lastnameRef = this.refs['lastname']
-    let firstname = firstnameRef.value
-    let lastname = lastnameRef.value
-    firstname ? this.props.store.setFirstname(firstname) : () => {}
-    lastname ? this.props.store.setLastname(lastname) : () => {}
-    firstnameRef.value = ''
-    lastnameRef.value = ''
+
+  onChange = (e) => {
+    const file = e.target.files[0];
+    console.log(file);
+    const reader = new FileReader();
+    reader.onload = function () {
+      console.log(reader.result.trim().split('\n'));
+    };
+    reader.readAsText(file);
   }
+
+  upload = () => {
+    console.log(this.uploadFile.ref);
+  }
+
+  store = {
+    github,
+  }
+
+
   render() {
-    console.log(this.props.store);
     return (
-      <div className="App">
-        <input ref="firstname" />
-        <input ref="lastname"/>
-        <button onClick={this._setName}>Change</button>
+      <Provider {...this.store} >
         <div>
-          <h3>{`My name is ${this.props.store.name}`}</h3>
+          <input type="file" ref={(ref) => { this.uploadFile = ref; }} onChange={this.onChange} />
+          <button onClick={this.upload}>Uploads</button>
         </div>
-      </div>
+      </Provider>
     );
   }
 }
