@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { observer, inject } from 'mobx-react';
 import Token from './token';
+import Main from './main';
 
 @inject('github')
 @observer
@@ -18,7 +19,7 @@ class Wrapper extends React.Component {
       {
         !this.props.github.hasToken ?
           <Token /> :
-          <div />
+          <Main />
       }
     </div>
     )
