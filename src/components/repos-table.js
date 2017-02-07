@@ -32,7 +32,7 @@ class ReposTable extends React.Component {
                   return (
                     <tr key={i}>
                       <td>{i + 1}</td>
-                      <td>{repo.username}</td>
+                      <td><a target="_blank" rel="noopener noreferrer" href={`http://github.com/${repo.username}`}>{repo.username}</a></td>
                       <td><Label bsStyle="danger">Not found</Label></td>
                       <td />
                       <td />
@@ -43,7 +43,7 @@ class ReposTable extends React.Component {
                 return (
                   <tr key={i}>
                     <td>{i + 1}</td>
-                    <td>{repo.username}</td>
+                    <td><a target="_blank" rel="noopener noreferrer" href={`http://github.com/${repo.username}`}>{repo.username}</a></td>
                     <td>{repo.data.name}</td>
                     <td>{repo.data.open_issues}</td>
                     <td><a target="_blank" rel="noopener noreferrer" href={repo.data.html_url}>github</a></td>
