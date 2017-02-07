@@ -12,6 +12,8 @@ class Github {
   @observable users = [];
   @observable progress = 0;
 
+  getRepos = () => (this.repos)
+
   @action
   setToken = (token) => {
     this.token = token;
@@ -25,6 +27,7 @@ class Github {
 
   @action
   fetchRepositories = (repo) => {
+    this.repos = [];
     _.map(this.users, (user) => {
       request
         .get(`${ENDPOINT}/repos/${user}/${repo}`)
@@ -44,7 +47,7 @@ class Github {
   filterData = (res, user) => {
     this.repos.push({
       username: user,
-      data: res,
+      data: res.body,
     });
   }
 

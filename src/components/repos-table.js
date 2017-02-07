@@ -1,14 +1,15 @@
 import React, { PropTypes } from 'react';
-import { inject } from 'mobx-react';
-import { Table } from 'react-bootstrap';
+import { inject, observer } from 'mobx-react';
+import { Table, Button, Label } from 'react-bootstrap';
 import _ from 'lodash';
 
 @inject('github')
+@observer
 class ReposTable extends React.Component {
 
   static get propTypes() {
     return {
-      github: PropTypes.objecit.isRequired,
+      github: PropTypes.object.isRequired,
     };
   }
 
@@ -26,16 +27,39 @@ class ReposTable extends React.Component {
       </thead>
       <tbody>
         {
-          _.each(this.props.github.repos, (repo, i) => (
-            <tr>
-              <td>{i + 1}</td>
-              <td>{repo.username}</td>
-              <td>{repo.data.name}</td>
-              <td>{repo.data.open_issues}</td>
-              <td><a href={repo.data.html_url}>github</a></td>
-            </tr>
-            ))
-        }
+              _.map(this.props.github.getRepos().slice(), (repo, i) => {
+                if (repo.data.message) {
+                  return (
+                    <tr key={i}>
+                      <td>{i + 1}</td>
+                      <td>{repo.username}</td>
+                      <td><Label bsStyle="danger">Not found</Label></td>
+                      <td />
+                      <td />
+                      <td />
+                    </tr>
+                  );
+                }
+                return (
+                  <tr key={i}>
+                    <td>{i + 1}</td>
+                    <td>{repo.username}</td>
+                    <td>{repo.data.name}</td>
+                    <td>{repo.data.open_issues}</td>
+                    <td><a target="_blank" rel="noopener noreferrer" href={repo.data.html_url}>github</a></td>
+                    <td>
+                      <Button>
+                        <a
+                          href={`https://codeload.github.com/${repo.username}/${repo.data.name}/zip/${repo.data.default_branch}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          download={`${repo.username}-${repo.data.name}-${repo.data.default_branch}`}
+                        >Download</a>
+                      </Button></td>
+                  </tr>
+                );
+              })
+            }
       </tbody>
     </Table>
     )
