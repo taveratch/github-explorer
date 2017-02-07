@@ -19,7 +19,9 @@ class Github {
   }
 
   @action
-  setGithubUsers = (users) => { this.users = users; }
+  setGithubUsers = (users) => {
+    this.users = users.trim().split('\n');
+  }
 
   @action
   fetchRepositories = (repo) => {
@@ -28,22 +30,22 @@ class Github {
         .get(`${ENDPOINT}/repos/${user}/${repo}`)
         .set('Accept', 'application/vnd.github.inertia-preview+json')
         .set('Authorization', `token ${this.token}`)
-        .end((res, err) => {
+        .end((err, res) => {
           this.update();
-          this.filterData(res, err);
+          this.filterData(res, user);
         });
-    })
-    .request
-      .get('/');
+    });
   }
 
   update = () => {
     this.progress = ((this.progress + 1) / this.users.length) * 100;
   }
 
-  filterData = (res, err) => {
-    console.log(res);
-    console.log(err);
+  filterData = (res, user) => {
+    this.repos.push({
+      username: user,
+      data: res,
+    });
   }
 
   @action
@@ -66,6 +68,8 @@ class Github {
         }
       });
   }
+
+  validateRepo = repo => repo.trim().split('\n')
 }
 
 export default Github;
