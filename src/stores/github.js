@@ -11,6 +11,7 @@ class Github {
   @observable tokenStatus = 'NO_TOKEN';
   @observable users = [];
   @observable progress = 0;
+  @observable count = 0;
 
   getRepos = () => (this.repos)
 
@@ -28,6 +29,8 @@ class Github {
   @action
   fetchRepositories = (repo) => {
     this.repos = [];
+    this.progress = 0;
+    this.count = 0;
     _.map(this.users, (user) => {
       request
         .get(`${ENDPOINT}/repos/${user}/${repo}`)
@@ -41,7 +44,8 @@ class Github {
   }
 
   update = () => {
-    this.progress = ((this.progress + 1) / this.users.length) * 100;
+    this.count = this.count + 1;
+    this.progress = Math.round((this.count / this.users.length) * 100);
   }
 
   filterData = (res, user) => {
@@ -51,8 +55,10 @@ class Github {
     });
   }
 
-  @action
-  isLoading = () => this.progress !== 100;
+
+  @computed get isLoading() {
+    return this.progress !== 100;
+  }
 
   @computed get hasToken() {
     return this.tokenStatus === 'SUCCESS';
