@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { ProgressBar } from 'react-bootstrap';
+// import { ProgressBar } from 'react-bootstrap';
 import { inject, observer } from 'mobx-react';
 
 @inject('github')
@@ -13,8 +13,14 @@ class Loading extends React.Component {
   }
 
   render = () => (
-    <div>
-      <ProgressBar active now={this.props.github.progress} label={`${this.props.github.progress}%`} />
+    <div className="loading-wrapper">
+      <div className="loading-bg">
+        { /* <ProgressBar
+          active now={this.props.github.progress} label={`${this.props.github.progress}%`} /> */ }
+      </div>
+      <div className="loading-body">
+        <div className="loader">{`${this.props.github.progress}%`}</div>
+      </div>
     </div>
   )
 }

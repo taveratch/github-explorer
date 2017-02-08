@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Provider } from 'mobx-react';
 import Github from './stores/github';
 import Wrapper from './containers/wrapper';
+import './scss/loading.scss';
+import './scss/layout.scss';
 
 const github = new Github();
 
@@ -26,7 +28,6 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.store.github);
     return (
       <Provider {...this.store} >
         <Wrapper />

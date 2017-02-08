@@ -15,7 +15,7 @@ class Wrapper extends React.Component {
   onClick = () => {}
 
   render = () => (
-    <div>
+    <div className="container">
       {
         !this.props.github.hasToken ?
           <Token /> :

@@ -12,6 +12,7 @@ class Github {
   @observable users = [];
   @observable progress = 0;
   @observable count = 0;
+  @observable isLoading = false;
 
   getRepos = () => (this.repos)
 
@@ -31,6 +32,7 @@ class Github {
     this.repos = [];
     this.progress = 0;
     this.count = 0;
+    this.isLoading = true;
     _.map(this.users, (user) => {
       request
         .get(`${ENDPOINT}/repos/${user}/${repo}`)
@@ -46,6 +48,7 @@ class Github {
   update = () => {
     this.count = this.count + 1;
     this.progress = Math.round((this.count / this.users.length) * 100);
+    this.isLoading = this.progress !== 100;
   }
 
   filterData = (res, user) => {
@@ -56,9 +59,10 @@ class Github {
   }
 
 
-  @computed get isLoading() {
-    return this.progress !== 100;
-  }
+  // @computed get isLoading() {
+  //   return this.isLoading;
+  //   // return this.progress > 0 && this.progress < 100;
+  // }
 
   @computed get hasToken() {
     return this.tokenStatus === 'SUCCESS';

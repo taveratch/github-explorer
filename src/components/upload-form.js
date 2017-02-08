@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { inject } from 'mobx-react';
-import { Button } from 'react-bootstrap';
+import { Button, Panel } from 'react-bootstrap';
 
 @inject('github')
 class UploadForm extends React.Component {
@@ -9,6 +9,12 @@ class UploadForm extends React.Component {
     return {
       github: PropTypes.object.isRequired,
     };
+  }
+
+  state = {
+    style: {
+      color: 'initial',
+    },
   }
 
   handleChange = (e) => {
@@ -23,13 +29,19 @@ class UploadForm extends React.Component {
         .setGithubUsers(reader.result);
     };
     reader.readAsText(this.file);
+    this.setState({ style: { color: 'green' } });
   }
 
   render = () => (
-    <div>
-      <input type="file" onChange={this.handleChange} />
-      <Button onClick={this.upload}>Upload</Button>
-    </div>
+    <Panel>
+      <div className="flex center-y" style={{ justifyContent: 'flex-end' }}>
+        <div>
+          <input type="file" onChange={this.handleChange} style={this.state.style} />
+          {/* <span>{this.state.status}</span> */}
+        </div>
+        <Button onClick={this.upload}>Upload</Button>
+      </div>
+    </Panel>
     )
 }
 
