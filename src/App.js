@@ -1,43 +1,35 @@
-import React, { Component } from 'react';
-import { Provider } from 'mobx-react';
-import Github from './stores/github';
-import Wrapper from './containers/wrapper';
-import './scss/loading.scss';
-import './scss/layout.scss';
+import React, { PropTypes } from 'react';
+import { inject, observer } from 'mobx-react';
+import Token from './containers/token';
+import Main from './containers/main';
 
-const github = new Github();
+@inject('github')
+@observer
+class App extends React.Component {
 
-class App extends Component {
-
-  onChange = (e) => {
-    const file = e.target.files[0];
-    console.log(file);
-    const reader = new FileReader();
-    reader.onload = function () {
-      console.log(reader.result.trim().split('\n'));
+  static get propTypes() {
+    return {
+      github: PropTypes.object.isRequired,
+      children: PropTypes.element.isRequired,
     };
-    reader.readAsText(file);
   }
 
-  upload = () => {
-    console.log(this.uploadFile.ref);
+  constructor = () => {
+    this.props.github.checkToken();
   }
 
-  store = {
-    github,
-  }
-
-  render() {
-    return (
-      <Provider {...this.store} >
-        <Wrapper />
-        {/* <div>
-          <input type="file" ref={(ref) => { this.uploadFile = ref; }} onChange={this.onChange} />
-          <button onClick={this.upload}>Uploads</button>
-        </div> */}
-      </Provider>
-    );
-  }
+  render = () => (
+    <div className="container">
+      {
+          !this.props.github.hasToken ?
+            <Token /> :
+            <Main />
+      }
+      {
+        this.props.children
+      }
+    </div>
+  )
 }
 
 export default App;

@@ -52,18 +52,24 @@
     "whatwg-fetch": "1.0.0"
   },
   "dependencies": {
+    "body-parser": "^1.16.0",
+    "cors": "^2.8.1",
     "csspin": "^1.1.4",
+    "express": "^4.14.1",
     "lodash": "^4.17.4",
     "mobx": "^3.0.2",
     "mobx-react": "^4.1.0",
+    "morgan": "^1.8.0",
     "react": "^15.4.2",
     "react-bootstrap": "^0.30.7",
     "react-dom": "^15.4.2",
+    "react-router": "^3.0.2",
     "superagent": "^3.4.1"
   },
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
+    "start:prod": "node server",
     "test": "node scripts/test.js --env=jsdom"
   },
   "jest": {
@@ -97,5 +103,6 @@
   },
   "eslintConfig": {
     "extends": "react-app"
-  }
+  },
+  "proxy": "http://localhost:3000"
 }

@@ -27,10 +27,10 @@ class Main extends React.Component {
         </Col>
       </Row>
       {
-          this.props.github.isLoading ?
-            <Loading /> :
-            <ReposTable />
-        }
+            this.props.github.isLoading ?
+              <Loading /> :
+              <ReposTable />
+          }
     </div>
     )
 }

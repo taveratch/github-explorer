@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { inject } from 'mobx-react';
-import { Modal, Button, FormControl } from 'react-bootstrap';
+import { Button, Panel } from 'react-bootstrap';
 import TokenStatus from '../components/token-status';
 
 @inject(['github'])
@@ -9,6 +9,7 @@ class TokenModal extends React.Component {
   static get propTypes() {
     return {
       github: PropTypes.object.isRequired,
+      params: PropTypes.object.isRequired,
     };
   }
 
@@ -35,24 +36,17 @@ class TokenModal extends React.Component {
     }
   }
 
-  render = () => (
-    <Modal show>
-      <Modal.Header>
-        Enter github token
-      </Modal.Header>
-      <Modal.Body>
-        <FormControl
-          value={this.state.token}
-          onChange={this.handleChange}
-        />
-        <br />
+  render = () => {
+    console.log(this.props.params);
+    return (
+      <Panel>
+        <Button>
+          <a href={'https://github.com/login/oauth/authorize?client_id=141ecf805fa1444bc6c3&redirect_uri=http://127.0.0.1:3000/callback&state=HelloWorld1234'}>Login with github</a>
+        </Button>
         <TokenStatus />
-      </Modal.Body>
-      <Modal.Footer>
-        <Button onClick={this.onClick}>Save</Button>
-      </Modal.Footer>
-    </Modal>
-    )
+      </Panel>
+    );
+  }
 }
 
 export default TokenModal;
