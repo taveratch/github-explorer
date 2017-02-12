@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Provider } from 'mobx-react';
 import { Router, Route, browserHistory } from 'react-router';
 import Github from './stores/github';
-import App from './app';
+import App from './App';
 import Main from './containers/main';
 import AuthCallback from './containers/auth-callback';
 import './scss/loading.scss';
