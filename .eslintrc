@@ -15,5 +15,11 @@
   "rules": {
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "react/prefer-stateless-function": 0,
+    "react/jsx-no-bind": [0, {
+      "ignoreRefs": false,
+      "allowArrowFunctions": true,
+      "allowBind": false,
+    }],
+    "jsx-a11y/no-static-element-interactions": 0,
   }
 }

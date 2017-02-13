@@ -15,6 +15,10 @@ class Github {
   @observable progress = 0;
   @observable count = 0;
   @observable isLoading = false;
+  @observable issue = {
+    isLoading: false,
+    issues: {},
+  }
 
   getRepos = () => (this.repos)
 
@@ -108,6 +112,19 @@ class Github {
   @action
   checkToken = () => {
     // check token from cookie.
+  }
+
+  @action
+  fetchIssues = (username, repo) => {
+    const self = this;
+    this.issue.isLoading = true;
+    request
+      .get(`https://api.github.com/repos/${username}/${repo}/issues`)
+      .end((err, res) => {
+        console.log(res);
+        self.issue.issues = res.body;
+        self.issue.isLoading = false;
+      });
   }
 }
 

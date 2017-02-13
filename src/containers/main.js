@@ -5,6 +5,7 @@ import RepoForm from '../components/repo-form';
 import UploadForm from '../components/upload-form';
 import ReposTable from '../components/repos-table';
 import Loading from '../components/loading';
+import IssuesWrapper from '../components/issues/wrapper';
 
 @inject('github')
 @observer
@@ -30,7 +31,8 @@ class Main extends React.Component {
             this.props.github.isLoading ?
               <Loading /> :
               <ReposTable />
-          }
+      }
+      <IssuesWrapper />
     </div>
     )
 }
