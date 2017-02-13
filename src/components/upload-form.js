@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react';
 import { inject } from 'mobx-react';
-import { Button, Panel } from 'react-bootstrap';
 
 @inject('github')
 class UploadForm extends React.Component {
@@ -15,10 +14,13 @@ class UploadForm extends React.Component {
     style: {
       color: 'initial',
     },
-  }
+  };
+
+  file = {};
 
   handleChange = (e) => {
     this.file = e.target.files[0];
+    this.upload();
   }
 
   upload = () => {
@@ -33,15 +35,21 @@ class UploadForm extends React.Component {
   }
 
   render = () => (
-    <Panel>
-      <div className="flex center-y" style={{ justifyContent: 'flex-end' }}>
-        <div>
-          <input type="file" onChange={this.handleChange} style={this.state.style} />
-          {/* <span>{this.state.status}</span> */}
-        </div>
-        <Button onClick={this.upload}>Upload</Button>
+    <div className="card">
+      <div className="card-content">
+        <form action="#" className="no-margin">
+          <div className="file-field input-field no-margin">
+            <div className="btn">
+              <input type="file" onChange={this.handleChange} />
+              <span>File</span>
+            </div>
+            <div className="file-path-wrapper">
+              <input className="file-path validate" type="text" value={this.file.name} placeholder="Choose file to upload (.csv)" />
+            </div>
+          </div>
+        </form>
       </div>
-    </Panel>
+    </div>
     )
 }
 

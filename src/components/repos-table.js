@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { inject, observer } from 'mobx-react';
-import { Table, Button, Label } from 'react-bootstrap';
+import { Label } from 'react-bootstrap';
 import _ from 'lodash';
 
 @inject('github')
@@ -14,7 +14,7 @@ class ReposTable extends React.Component {
   }
 
   render = () => (
-    <Table responsive>
+    <table className="bordered">
       <thead>
         <tr>
           <th>#</th>
@@ -48,20 +48,20 @@ class ReposTable extends React.Component {
                     <td>{repo.data.open_issues}</td>
                     <td><a target="_blank" rel="noopener noreferrer" href={repo.data.html_url}>github</a></td>
                     <td>
-                      <Button>
-                        <a
-                          href={`https://codeload.github.com/${repo.username}/${repo.data.name}/zip/${repo.data.default_branch}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          download={`${repo.username}-${repo.data.name}-${repo.data.default_branch}`}
-                        >Download</a>
-                      </Button></td>
+                      <a
+                        className="waves-effect waves-light btn"
+                        href={`https://codeload.github.com/${repo.username}/${repo.data.name}/zip/${repo.data.default_branch}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        download={`${repo.username}-${repo.data.name}-${repo.data.default_branch}`}
+                      >Download</a>
+                    </td>
                   </tr>
                 );
               })
             }
       </tbody>
-    </Table>
+    </table>
     )
 }
 

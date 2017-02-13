@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react';
 import { inject, observer } from 'mobx-react';
-import { Col, Row } from 'react-bootstrap';
 import RepoForm from '../components/repo-form';
 import UploadForm from '../components/upload-form';
 import ReposTable from '../components/repos-table';
@@ -18,14 +17,14 @@ class Main extends React.Component {
 
   render = () => (
     <div>
-      <Row>
-        <Col xs={12} sm={6} md={6} lg={6}>
+      <div className="row">
+        <div className="col s12 m6 l6">
           <UploadForm />
-        </Col>
-        <Col xs={12} sm={6} md={6} lg={6}>
+        </div>
+        <div className="col s12 m6 l6">
           <RepoForm />
-        </Col>
-      </Row>
+        </div>
+      </div>
       {
             this.props.github.isLoading ?
               <Loading /> :

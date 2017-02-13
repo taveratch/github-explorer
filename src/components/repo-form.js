@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { FormControl, Button, Panel } from 'react-bootstrap';
+import { FormControl, Button } from 'react-bootstrap';
 import { inject } from 'mobx-react';
 
 @inject('github')
@@ -25,12 +25,12 @@ class RepoForm extends React.Component {
   }
 
   render = () => (
-    <Panel>
-      <div className="flex">
+    <div className="card">
+      <div className="card-content flex">
         <FormControl onChange={this.handleChange} className="margin-right" />
-        <Button onClick={this.onClick}>Load repositories</Button>
+        <Button onClick={this.onClick}>Fetch</Button>
       </div>
-    </Panel>
+    </div>
   )
 }
 
