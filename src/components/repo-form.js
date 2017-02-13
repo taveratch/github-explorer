@@ -24,10 +24,16 @@ class RepoForm extends React.Component {
     this.setState({ repo: e.target.value });
   }
 
+  handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      this.onClick();
+    }
+  }
+
   render = () => (
     <div className="card">
       <div className="card-content flex">
-        <FormControl onChange={this.handleChange} className="margin-right" />
+        <FormControl onChange={this.handleChange} onKeyPress={this.handleKeyPress} className="margin-right" />
         <Button onClick={this.onClick}>Fetch</Button>
       </div>
     </div>
