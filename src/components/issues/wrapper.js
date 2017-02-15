@@ -26,7 +26,7 @@ class IssuesWrapper extends React.Component {
         element.removeClass('issues-wrapper-open');
         element.addClass('issues-wrapper-close');
       }
-    }, 300);
+    }, 100);
   }
 
   close = () => {
