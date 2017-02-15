@@ -14,7 +14,6 @@ class Github {
   @observable users = [];
   @observable progress = 0;
   @observable count = 0;
-  @observable isLoading = false;
   @observable issue = {
     isLoading: false,
     issues: {},
@@ -34,27 +33,27 @@ class Github {
   }
 
   @action
-  fetchRepositories = (repo) => {
+  fetchRepositories = (repo, setMessageCallback, successCallback) => {
     this.repos = [];
     this.progress = 0;
     this.count = 0;
-    this.isLoading = true;
     _.map(this.users, (user) => {
       request
         .get(`${ENDPOINT}/repos/${user}/${repo}`)
         .set('Accept', 'application/vnd.github.inertia-preview+json')
         .set('Authorization', `token ${this.token}`)
         .end((err, res) => {
-          this.update();
+          this.update(setMessageCallback, successCallback);
           this.filterData(res, user);
         });
     });
   }
 
-  update = () => {
+  update = (setMessageCallback, successCallback) => {
     this.count = this.count + 1;
     this.progress = Math.round((this.count / this.users.length) * 100);
-    this.isLoading = this.progress !== 100;
+    setMessageCallback(`${this.progress}%`);
+    if (this.progress === 100) { successCallback(); }
   }
 
   filterData = (res, user) => {
@@ -63,12 +62,6 @@ class Github {
       data: res.body,
     });
   }
-
-
-  // @computed get isLoading() {
-  //   return this.isLoading;
-  //   // return this.progress > 0 && this.progress < 100;
-  // }
 
   @computed get hasToken() {
     return this.tokenStatus === 'SUCCESS';
