@@ -2,23 +2,22 @@ import React, { Component } from 'react';
 import { Provider } from 'mobx-react';
 import { Router, Route, browserHistory } from 'react-router';
 import Github from './stores/github';
-import AppStore from './stores/app';
+import Issues from './stores/issues';
 import Loader from './stores/loader';
 import App from './App';
 import Main from './containers/main';
 import AuthCallback from './containers/auth-callback';
-import './scss/loading.scss';
-import './scss/layout.scss';
+import './scss/application.scss';
 
 const github = new Github();
-const app = new AppStore();
+const issues = new Issues();
 const loader = new Loader();
 
 class AppRoute extends Component {
 
   store = {
     github,
-    app,
+    issues,
     loader,
   }
 

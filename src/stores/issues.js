@@ -5,8 +5,8 @@ class App {
   @observable blur = false;
 
   @action
-  openIssuePage = () => {
-    this.showIssuePage = true;
+  toggleIssuesPage = () => {
+    this.showIssuePage = !this.showIssuePage;
   }
 
   @action

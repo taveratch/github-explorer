@@ -6,16 +6,10 @@ $blur: 6px;
   bottom: 0;
   left: 0;
   right: 0;
-  // -webkit-filter: blur($blur);
-  // -moz-filter: blur($blur);
-  // -o-filter: blur($blur);
-  // -ms-filter: blur($blur);
-  // filter: blur($blur);
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: rgba(0,0,0,0.4);
-
 }
 
 .loading-wrapper {

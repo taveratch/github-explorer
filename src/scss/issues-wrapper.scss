@@ -1,0 +1,35 @@
+.issues-wrapper {
+  transform: translateY(100%);
+  position: fixed;
+  height: 100vh;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0,0,0,0.4);
+  .container {
+    background-color: white;
+    padding: 15px;
+    min-height: 100vh;
+    margin-top: 30px;
+    position: relative;
+  }
+
+  .close-icon {
+    position: absolute;;
+    top: 0;
+    right: 0;
+    margin-top: 15px;
+    margin-right: 15px;
+  }
+}
+
+.issues-wrapper-open {
+  transition: 1s;
+  transform: translateY(0%);
+}
+
+.issues-wrapper-close {
+  transition: 1s;
+  transform: translateY(100%);
+}

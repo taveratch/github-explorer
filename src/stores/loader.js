@@ -1,7 +1,7 @@
 import { observable, action } from 'mobx';
 
 class Loader {
-  @observable message;
+  @observable message = '';
   @observable isLoading;
 
   @action

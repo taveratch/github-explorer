@@ -3,22 +3,22 @@ import { inject, observer } from 'mobx-react';
 import { Table, Button, Label } from 'react-bootstrap';
 import _ from 'lodash';
 
-@inject('github', 'app')
+@inject('github', 'issues')
 @observer
 class ReposTable extends React.Component {
 
   static get propTypes() {
     return {
       github: PropTypes.object.isRequired,
-      app: PropTypes.object.isRequired,
+      issues: PropTypes.object.isRequired,
     };
   }
 
   onRowClick = (username, repo) => {
     this.props.github
       .fetchIssues(username, repo);
-    this.props.app
-      .openIssuePage();
+    this.props.issues
+      .toggleIssuesPage();
   }
 
   render = () => {
