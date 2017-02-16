@@ -20,10 +20,10 @@ class Main extends React.Component {
   render = () => (
     <div>
       <Row>
-        <Col xs={12} sm={6} md={6} lg={6}>
+        <Col xs={12} sm={12} md={6} lg={6}>
           <UploadForm />
         </Col>
-        <Col xs={12} sm={6} md={6} lg={6}>
+        <Col xs={12} sm={12} md={6} lg={6}>
           <RepoForm />
         </Col>
       </Row>

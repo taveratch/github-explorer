@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { inject } from 'mobx-react';
-import { Button, Panel } from 'react-bootstrap';
+import { FlatButton, FontIcon } from 'material-ui';
+import { Card, CardText } from 'material-ui/Card';
 import TokenStatus from '../components/token-status';
 
 @inject(['github'])
@@ -9,7 +10,6 @@ class TokenModal extends React.Component {
   static get propTypes() {
     return {
       github: PropTypes.object.isRequired,
-      params: PropTypes.object.isRequired,
     };
   }
 
@@ -36,17 +36,20 @@ class TokenModal extends React.Component {
     }
   }
 
-  render = () => {
-    console.log(this.props.params);
-    return (
-      <Panel>
-        <Button>
-          <a href={'https://github.com/login/oauth/authorize?client_id=141ecf805fa1444bc6c3&redirect_uri=http://127.0.0.1:3000/callback&state=HelloWorld1234'}>Login with github</a>
-        </Button>
-        <TokenStatus />
-      </Panel>
-    );
-  }
+  render = () => (
+    <Card>
+      <CardText>
+        <div className="flex center-x">
+          <FlatButton
+            href={'https://github.com/login/oauth/authorize?client_id=141ecf805fa1444bc6c3&redirect_uri=http://127.0.0.1:3000/callback&state=HelloWorld1234'}
+            label="Login with github"
+            icon={<FontIcon className="muidocs-icon-custom-github" />}
+          />
+        </div>
+      </CardText>
+      <TokenStatus />
+    </Card>
+    )
 }
 
 export default TokenModal;
