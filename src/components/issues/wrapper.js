@@ -1,3 +1,4 @@
+/* eslint no-unused-vars: 0*/
 import React, { PropTypes } from 'react';
 import { inject, observer } from 'mobx-react';
 import $ from 'jquery';
@@ -17,7 +18,6 @@ class IssuesWrapper extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     const element = $('.issues-wrapper');
-    console.log(prevProps, prevState);
     setTimeout(() => {
       if (prevProps.issues.showIssuePage) {
         element.removeClass('issues-wrapper-close');

@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { inject } from 'mobx-react';
 import { Card, CardText } from 'material-ui/Card';
-import { FlatButton } from 'material-ui';
+import { FlatButton, Subheader } from 'material-ui';
 
 @inject('github')
 class UploadForm extends React.Component {
@@ -14,12 +14,17 @@ class UploadForm extends React.Component {
 
   state = {
     style: {
-      color: 'initial',
+      display: 'none',
     },
-  }
+    fileName: '',
+  };
+
+  file = {};
 
   handleChange = (e) => {
     this.file = e.target.files[0];
+    this.setState({ fileName: this.file.name });
+    this.upload();
   }
 
   upload = () => {
@@ -30,23 +35,17 @@ class UploadForm extends React.Component {
         .setGithubUsers(reader.result);
     };
     reader.readAsText(this.file);
-    this.setState({ style: { color: 'green' } });
   }
 
   render = () => (
     <Card>
+      <Subheader>Upload user list</Subheader>
       <CardText>
-        <div className="flex center-y" style={{ justifyContent: 'flex-end' }}>
-          <div>
+        <div className="flex flex-column">
+          <FlatButton containerElement="label" label="Choose file">
             <input type="file" onChange={this.handleChange} style={this.state.style} />
-            {/* <span>{this.state.status}</span> */}
-          </div>
-          <FlatButton
-            label="Upload"
-            labelPosition="before"
-            onTouchTap={this.upload}
-            // icon={<FontIcon className="material-icons">home</FontIcon>}
-          />
+          </FlatButton>
+          <p>{this.file.name || ''}</p>
         </div>
       </CardText>
     </Card>

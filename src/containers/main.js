@@ -19,12 +19,12 @@ class Main extends React.Component {
 
   render = () => (
     <div>
-      <Row>
-        <Col xs={12} sm={12} md={6} lg={6}>
-          <UploadForm />
+      <Row className={'main-top-menu-wrapper'}>
+        <Col xs={12} sm={12} md={6} lg={6} className={'main-top-menu-each'}>
+          <div style={{ width: '100%' }}><UploadForm /></div>
         </Col>
-        <Col xs={12} sm={12} md={6} lg={6}>
-          <RepoForm />
+        <Col xs={12} sm={12} md={6} lg={6} className={'main-top-menu-each'}>
+          <div style={{ width: '100%' }}><RepoForm /></div>
         </Col>
       </Row>
       {
