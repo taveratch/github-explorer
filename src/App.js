@@ -17,7 +17,7 @@ class App extends React.Component {
     };
   }
 
-  constructor = () => {
+  componentDidMount() {
     this.props.github.checkToken();
   }
 

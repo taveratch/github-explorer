@@ -1,6 +1,7 @@
 import { action, observable, computed } from 'mobx';
 import request from 'superagent';
 import _ from 'lodash';
+import cookieToken from '../utils/cookie-token';
 
 const ENDPOINT = 'https://api.github.com';
 const CLIENT_ID = '141ecf805fa1444bc6c3';
@@ -24,6 +25,7 @@ class Github {
   @action
   setToken = (token) => {
     this.token = token;
+    cookieToken.saveToken(token);
     this.validateToken(token);
   }
 
@@ -104,7 +106,8 @@ class Github {
 
   @action
   checkToken = () => {
-    // check token from cookie.
+    const token = cookieToken.getToken();
+    if (token) this.setToken(token);
   }
 
   @action
