@@ -7,6 +7,8 @@ const ENDPOINT = 'https://api.github.com';
 const CLIENT_ID = '141ecf805fa1444bc6c3';
 const CLIENT_SECRET = '8b0ee975f5aa20ab4808ff4cbf023606c05a7ba2';
 
+const GET = 'GET';
+
 class Github {
 
   @observable repos = [];
@@ -40,8 +42,7 @@ class Github {
     this.progress = 0;
     this.count = 0;
     _.map(this.users, (user) => {
-      request
-        .get(`${ENDPOINT}/repos/${user}/${repo}`)
+      request(GET, `${ENDPOINT}/repos/${user}/${repo}`)
         .set('Accept', 'application/vnd.github.inertia-preview+json')
         .set('Authorization', `token ${this.token}`)
         .end((err, res) => {
