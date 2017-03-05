@@ -102,6 +102,7 @@ class Github {
       .end((err, res) => {
         const token = res.body.access_token;
         self.setToken(token);
+        window.location = '/';
       });
   }
 

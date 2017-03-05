@@ -9,6 +9,8 @@
   overflow: auto;
   background-color: rgba(0,0,0,0.4);
   z-index: 9999;
+  word-wrap: break-word;
+  
   .container {
     background-color: white;
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.4);
@@ -31,11 +33,13 @@
     height: inherit !important;
     min-width: 100% !important;
     margin-bottom: 15px !important;
+    margin-top: 15px !important;
   }
 
   .issue-title {
     color: rgba(0, 0, 0, 0.870588);
     font-size: 16px;
+    margin-bottom: 15px;
   }
 
   .issue-body {
