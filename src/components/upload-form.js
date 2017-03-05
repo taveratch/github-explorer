@@ -1,5 +1,7 @@
 import React, { PropTypes } from 'react';
 import { inject } from 'mobx-react';
+import { Card, CardText } from 'material-ui/Card';
+import { FlatButton, Subheader } from 'material-ui';
 
 @inject('github')
 class UploadForm extends React.Component {
@@ -12,14 +14,16 @@ class UploadForm extends React.Component {
 
   state = {
     style: {
-      color: 'initial',
+      display: 'none',
     },
+    fileName: '',
   };
 
   file = {};
 
   handleChange = (e) => {
     this.file = e.target.files[0];
+    this.setState({ fileName: this.file.name });
     this.upload();
   }
 
@@ -31,25 +35,20 @@ class UploadForm extends React.Component {
         .setGithubUsers(reader.result);
     };
     reader.readAsText(this.file);
-    this.setState({ style: { color: 'green' } });
   }
 
   render = () => (
-    <div className="card">
-      <div className="card-content">
-        <form action="#" className="no-margin">
-          <div className="file-field input-field no-margin">
-            <div className="btn">
-              <input type="file" onChange={this.handleChange} />
-              <span>File</span>
-            </div>
-            <div className="file-path-wrapper">
-              <input className="file-path validate" type="text" value={this.file.name} placeholder="Choose file to upload (.csv)" />
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
+    <Card>
+      <Subheader>Upload user list</Subheader>
+      <CardText>
+        <div className="flex flex-column">
+          <FlatButton containerElement="label" label="Choose file">
+            <input type="file" onChange={this.handleChange} style={this.state.style} />
+          </FlatButton>
+          <p>{this.file.name || ''}</p>
+        </div>
+      </CardText>
+    </Card>
     )
 }
 

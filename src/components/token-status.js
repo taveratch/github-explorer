@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { Label } from 'react-bootstrap';
+import { Snackbar } from 'material-ui';
 import { inject, observer } from 'mobx-react';
 
 @inject('github')
@@ -12,23 +12,28 @@ class Status extends React.Component {
     };
   }
 
-  empty = () => {}
+  state = {
+    open: false,
+  }
+
+  onClose = () => {
+    this.setState({ open: false });
+  }
 
   render = () => {
     let status = 'Checking token...';
-    let style = 'warning';
+    let open = true;
     if (this.props.github.tokenStatus === 'FAILED') {
       status = 'Invalid token!';
-      style = 'danger';
     }
 
     if (this.props.github.tokenStatus === 'NO_TOKEN') {
-      return <div />;
+      open = false;
     }
 
     return (
       <div>
-        <Label bsStyle={style}>{status}</Label>
+        <Snackbar open={open} message={status} onRequestClose={this.onClose} />
       </div>
     );
   }

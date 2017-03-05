@@ -1,13 +1,13 @@
 import { action, observable, computed } from 'mobx';
 import request from 'superagent';
 import _ from 'lodash';
+import cookieToken from '../utils/cookie-token';
 
 const ENDPOINT = 'https://api.github.com';
 const CLIENT_ID = '141ecf805fa1444bc6c3';
 const CLIENT_SECRET = '8b0ee975f5aa20ab4808ff4cbf023606c05a7ba2';
 
 const GET = 'GET';
-const POST = 'POST';
 
 class Github {
 
@@ -17,13 +17,17 @@ class Github {
   @observable users = [];
   @observable progress = 0;
   @observable count = 0;
-  @observable isLoading = false;
+  @observable issue = {
+    isLoading: false,
+    issues: {},
+  }
 
   getRepos = () => (this.repos)
 
   @action
   setToken = (token) => {
     this.token = token;
+    cookieToken.saveToken(token);
     this.validateToken(token);
   }
 
@@ -33,35 +37,26 @@ class Github {
   }
 
   @action
-  fetchRepositories = (repo) => {
-    if (repo == null || repo === '' || this.users.length === 0) {
-      if (this.users.length === 0) {
-        alert('Enter username');
-      } else {
-        alert('Enter repository name');
-      }
-      return;
-    }
-
+  fetchRepositories = (repo, setMessageCallback, successCallback) => {
     this.repos = [];
     this.progress = 0;
     this.count = 0;
-    this.isLoading = true;
     _.map(this.users, (user) => {
       request(GET, `${ENDPOINT}/repos/${user}/${repo}`)
         .set('Accept', 'application/vnd.github.inertia-preview+json')
         .set('Authorization', `token ${this.token}`)
         .end((err, res) => {
-          this.update();
+          this.update(setMessageCallback, successCallback);
           this.filterData(res, user);
         });
     });
   }
 
-  update = () => {
+  update = (setMessageCallback, successCallback) => {
     this.count = this.count + 1;
     this.progress = Math.round((this.count / this.users.length) * 100);
-    this.isLoading = this.progress !== 100;
+    setMessageCallback(`${this.progress}%`);
+    if (this.progress === 100) { successCallback(); }
   }
 
   filterData = (res, user) => {
@@ -70,12 +65,6 @@ class Github {
       data: res.body,
     });
   }
-
-
-  // @computed get isLoading() {
-  //   return this.isLoading;
-  //   // return this.progress > 0 && this.progress < 100;
-  // }
 
   @computed get hasToken() {
     return this.tokenStatus === 'SUCCESS';
@@ -118,7 +107,21 @@ class Github {
 
   @action
   checkToken = () => {
-    // check token from cookie.
+    const token = cookieToken.getToken();
+    if (token) this.setToken(token);
+  }
+
+  @action
+  fetchIssues = (username, repo) => {
+    const self = this;
+    this.issue.isLoading = true;
+    request
+      .get(`https://api.github.com/repos/${username}/${repo}/issues`)
+      .end((err, res) => {
+        console.log(res);
+        self.issue.issues = res.body;
+        self.issue.isLoading = false;
+      });
   }
 }
 
